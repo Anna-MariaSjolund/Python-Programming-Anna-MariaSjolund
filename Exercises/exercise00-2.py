@@ -4,6 +4,6 @@ def compute_accuracy(correct, total):
     accuracy = correct/total
     return(accuracy)
 
-#Count the accuracy of a model for weather prediction.
+#Count the accuracy of a model for weather prediction
 accuracy = compute_accuracy(300, 365)
 print(accuracy)
