@@ -1,1 +1,1 @@
-This folder will contain explorations.
+This folder will contain explorations
