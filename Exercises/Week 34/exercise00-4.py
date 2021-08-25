@@ -1,20 +1,16 @@
 def count_slope(x1, y1, x2, y2):
     '''Takes the coordinates (x, y) of the two points as input.
     Method returns the k-value/slope.'''
-    slope = (y2-y1)/(x2-x1)
-    return slope
+    return (y2-y1)/(x2-x1)
 
 #Computes and prints the slope of the line. 
-slope = count_slope(4, 4, 0, 1)
-print(slope)
+print(count_slope(4, 4, 0, 1))
 
 def count_m(x1, y1, x2, y2):
     '''Takes the coordinates (x, y) of the two points as input.
     Method returns the m-value.'''
     slope = (y2-y1)/(x2-x1) #Counts the slope.
-    m = y1 - (slope*x1) #Uses slope to count the m-value.
-    return m
+    return y1 - (slope*x1) #Uses slope to count the m-value.
 
 #Computes and prints the m-value of the line.
-m = count_m(4, 4, 0, 1)
-print(m)
+print(count_m(4, 4, 0, 1))
