@@ -8,6 +8,5 @@ def accuracy(tp, fp, fn, tn):
 
 #Predicting accuracy for a machine learning model that has been trained to predict fire. 
 #I would argue that this model is not good, because it results in significantly more false negatives than false positives.
-#In this case you would like to have a model that rather gives too many false positives, than false negatives (i.e. a model that is "overly-cautious").
-
-print(accuracy(2, 2, 11, 985))
+#In this case (when it could be a life-or-death situation) you would like to have a model that rather gives too many false positives, than false negatives (i.e. a model that is "overly-cautious").
+print(f"The accuracy of the fire prediction model is: {accuracy(2, 2, 11, 985):.3f}.")
