@@ -18,7 +18,7 @@ Gore Bord 55
 Jakob Kallander 65
 Fredrika Ulven 10
 
-Sorted List of Test Results:
+Sorted Alphabetically:
 Adam Gustafsson 25
 Björn Björnsson 39
 Bose Bosseson 32
@@ -40,28 +40,28 @@ Sven Erik Karlsson 13
 Sven Erik Lundin 39
 
 Sorted Results:
-Grade A:
-Jakob Kallander 65
-Grade B:
-Gore Bord 55
-Grade C:
-Ella Ester 41
-Johan Johansson 42
-Ove Karlsten 41
-Grade D:
-Björn Björnsson 39
-Bose Bosseson 32
-Emma Boden 32
-Erik Eriksson 31
-Jonas Jonasson 31
-Karl Karlsson 32
-Sven Erik Lundin 39
-Grade E:
-Adam Gustafsson 25
-Emil Johansson 23
-Hanna Karlsson 23
-Håkan Håkanson 24
-Ida Håkansson 23
 Grade F:
 Fredrika Ulven 10
 Sven Erik Karlsson 13
+Grade E:
+Emil Johansson 23
+Hanna Karlsson 23
+Ida Håkansson 23
+Håkan Håkanson 24
+Adam Gustafsson 25
+Grade D:
+Erik Eriksson 31
+Jonas Jonasson 31
+Bose Bosseson 32
+Emma Boden 32
+Karl Karlsson 32
+Björn Björnsson 39
+Sven Erik Lundin 39
+Grade C:
+Ella Ester 41
+Ove Karlsten 41
+Johan Johansson 42
+Grade B:
+Gore Bord 55
+Grade A:
+Jakob Kallander 65
