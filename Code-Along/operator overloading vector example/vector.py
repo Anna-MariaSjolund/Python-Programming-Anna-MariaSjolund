@@ -27,7 +27,7 @@ class Vector:
     #(2, 3) + (1, 1, 1) Not okay, they have to be the same dimension
     #(2, 3) + (1, 1) = (3, 4) This is okay
 
-
+    #To overload the + operator we have to write __add__
     def __add__(self, other:"Vector") -> "Vector": #We have to use quotes becuase it is a custom type
         if self.validate_vectors(other): #The object itself will be sent it to the method, together with other that we specify
             #Other will now be a vector have the same dimension
@@ -58,7 +58,7 @@ class Vector:
     def __str__(self) -> str:
         return f"{self.numbers}"
 
-    # [] operator
+    # [] operator __getitem__ is the "name" of the [] operator
     def __getitem__(self, item:int) -> float:
         return self.numbers[item] #This will enable us to reach an element in the list
 #Both of these are valid vectors
