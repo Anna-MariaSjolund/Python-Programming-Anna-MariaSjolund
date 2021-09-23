@@ -11,17 +11,20 @@ class PlotVectors:
         
         self.X, self.Y = X, Y
         #(0,0...0) We start at origo
-        self.originX = self.originY = (0 for _ in range(len(X)))
+        self.originX = self.originY = tuple(0 for _ in range(len(X)))
     
     def plot(self) -> None:
         '''Visualise vectors.'''
+
         plt.quiver(self.originX, self.originY, self.X, self.Y, scale=1, scale_units="xy", angles="xy")
+        
         plt.xlim(-2, 10)
         plt.ylim(-2, 10)
+        plt.xlabel("x")
         plt.ylabel("y")
         title = " ".join(f"{X, Y}" for X, Y in zip(self.X, self.Y))
         plt.title(f"Vectors: {title}")
         plt.grid
-        plt.show()
+        plt.show() 
 
 

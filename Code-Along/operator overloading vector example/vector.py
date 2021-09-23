@@ -41,6 +41,27 @@ class Vector:
             #If we have five numbers the numbers will be unpacked and each element will be sent to the Vector
             return Vector(*numbers) 
 
+    def __sub__(self, other) -> "Vector":
+        '''Subtracts to vectors of same dimension using + operator.'''
+        if self.validate_vectors(other): #The object itself will be sent it to the method, together with other that we specify
+            #Other will now be a vector have the same dimension
+            #We zip together self.numbers and other.numbers and unpack them in a and b, then add them together and store them in number
+            numbers = (a-b for a, b in zip(self.numbers, other.numbers)) #numbers is now a generator
+            #we have to unpack the generator object using *
+            #If we have five numbers the numbers will be unpacked and each element will be sent to the Vector
+            return Vector(*numbers)  
+
+    def __mul__(self, value:float) -> "Vector":
+        print("__mul__ called ...")
+        if not isinstance(value, (float, int)):
+            raise TypeError(f"Value must be float or int, not {type(value)}")  
+        numbers = (value*a for a in self.numbers) 
+        return Vector(*numbers) 
+
+    def __rmul__(self, value:float) -> "Vector":
+        print("__rmul__ called ...")
+        return self*value
+
     #If we do not make this function we cannot runt len(v1) in the Jupyter notebook
     #We have done this by operation overload
     # len() function
@@ -74,31 +95,10 @@ class Vector:
                 return False
         return True
     
-    def __sub__(self, other) -> "Vector":
-        '''Subtracts to vectors of same dimension using + operator.'''
-        if self.validate_vectors(other): #The object itself will be sent it to the method, together with other that we specify
-            #Other will now be a vector have the same dimension
-            #We zip together self.numbers and other.numbers and unpack them in a and b, then add them together and store them in number
-            numbers = (a-b for a, b in zip(self.numbers, other.numbers)) #numbers is now a generator
-            #we have to unpack the generator object using *
-            #If we have five numbers the numbers will be unpacked and each element will be sent to the Vector
-            return Vector(*numbers)  
-
-    def __mul__(self, value:float) -> "Vector":
-        print("__mul__ called")
-        if not isinstance(value, (float, int)):
-            raise TypeError(f"Value must be float or int, not {type(value)}")  
-        numbers = (value*a for a in self.numbers) 
-        return Vector(*numbers)
-
-    def __rmul__(self, value:float) -> "Vector":
-        print("__rmul__ called")
-        return self*value
-    
     def plot(self, *others:"Vector") -> None:
         #TODO: error checking
 
-        #composition -> Vector has a plotVectors object
+        #composition -> Vector has a PlotVectors object
         plot_vector = PlotVectors(self, *others)
         plot_vector.plot()
         
