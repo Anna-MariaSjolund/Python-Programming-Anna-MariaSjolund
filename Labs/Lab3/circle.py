@@ -26,9 +26,9 @@ class Circle(Geometry):
     #Felhantering för x-value, y-value
     def is_inside(self, x_value, y_value):
         eucl_distance = math.sqrt((self.x_coordinate - x_value)**2 + (self.y_coordinate-y_value)**2)
-        print(eucl_distance)
-        print(self.radius)
+        #print(eucl_distance)
+        #print(self.radius)
         if eucl_distance < self.radius:
             return True
         else: 
-            return False
+            return False 

@@ -33,5 +33,5 @@ class Geometry:
         else:
             return value
 
-    #is inside pythagoras sats 
+    #is inside pythagoras sats  
     
