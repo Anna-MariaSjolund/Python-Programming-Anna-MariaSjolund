@@ -12,10 +12,7 @@ class Circle(Geometry):
    
     @radius.setter
     def radius(self, radius) -> None:
-        Geometry.validation_above_zero(radius)
-        Geometry.validation_numerical(radius)
-        self._radius = radius
-        return self._radius
+            self._radius = Geometry.validation_numerical_above_zero(radius)
     
     def area(self):
         return (math.pi*(self.radius**2))
@@ -23,12 +20,20 @@ class Circle(Geometry):
     def circumference(self):
         return 2*math.pi*self.radius
     
-    #Felhantering för x-value, y-value
     def is_inside(self, x_value, y_value):
+        _ = Geometry.validation_numerical(x_value)
+        _ = Geometry.validation_numerical(y_value)
         eucl_distance = math.sqrt((self.x_coordinate - x_value)**2 + (self.y_coordinate-y_value)**2)
-        #print(eucl_distance)
-        #print(self.radius)
-        if eucl_distance < self.radius:
+        if eucl_distance <= self.radius:
             return True
         else: 
-            return False 
+            return False
+    
+    def __eq__(self, other):
+        if type(self) != type(other):
+            return False
+
+        if self.radius == other.radius:
+            return True
+        else:
+            return False
