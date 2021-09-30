@@ -270,5 +270,133 @@ class TestRectangle(unittest.TestCase):
         circ = Circle(3, -2, 3)
         self.assertEqual(rect == circ, False)
 
+
+#TEST SPHERE SUBCLASS
+
+class TestSphere(unittest.TestCase):
+    """Tests the Sphere class."""
+
+    #CREATION OF SPHERE OBJECT
+
+    def setUp(self) -> None:
+        """Initialises values to use for the radius, x, y and z-coordinate."""
+
+        self.radius, self.x_coordinate, self.y_coordinate, self.z_coordinate = 3, 3, -3, 3
+    
+    def create_sphere_object(self) -> "Sphere":
+        """Returns a Sphere object, using the values from the setUp function."""
+
+        return Sphere(self.radius, self.x_coordinate, self.y_coordinate, self.z_coordinate)
+
+    
+    #TESTS CREATION OF CIRCLE OBJECT
+
+    def test_create_sphere_object(self):
+        """Tests if a Sphere object has been set up with the correct values."""
+
+        sph = self.create_sphere_object()
+        self.assertEqual((sph.radius, sph.x_coordinate, sph.y_coordinate, sph.z_coordinate), (self.radius, self.x_coordinate, self.y_coordinate, self.z_coordinate))
+
+    def test_create_sphere_object_without_x_y_z(self):
+        """Tests if a Sphere object has been set up correctly, when not entering the x, y and z-coordinates."""
+
+        sph = Sphere(2)
+        self.assertEqual((sph.radius, sph.x_coordinate, sph.y_coordinate, sph.z_coordinate), (2, 0, 0, 0))
+
+    def test_invalid_string_in_parameter(self):
+        """Tests if a TypeError is raised when entering a str in the parameters."""
+
+        with self.assertRaises(TypeError):
+            Sphere("3", 3, -3, 3)
+        with self.assertRaises(TypeError):
+            Sphere(3, "3", -3, 3)
+        with self.assertRaises(TypeError):
+            Sphere(3, 3, "-3", 3)
+        with self.assertRaises(TypeError):
+            Sphere(3, 3, -3, "3")
+    
+    def test_radius_zero_or_below(self):
+        """Tests if a ValueError is raised when trying to set the radius to a value below 0."""
+
+        with self.assertRaises(ValueError):
+            Sphere(-1, 2, 3, 4)
+
+    #TEST SPHERE METHODS
+
+    def test_translate(self):
+        """Tests if the x, y and z-coordinates are changed correctly."""
+
+        sph = self.create_sphere_object()
+        sph.translate(4, -3, -2)
+        self.assertEqual((sph.x_coordinate, sph.y_coordinate, sph.z_coordinate), (4, -3, -2))
+    
+    def test_translate_str_in_parameter(self):
+        """Tests if a TypeError is raised when entering a str in the parameter."""
+
+        sph = self.create_sphere_object()        
+        with self.assertRaises(TypeError):
+            sph.translate("4", 3, 2)
+        with self.assertRaises(TypeError):
+            sph.translate(4, "3", 2)
+        with self.assertRaises(TypeError):
+            sph.translate(4, 3, "2")
+    
+    def test_area(self):
+        """Tests that the area is correctly calculated."""
+
+        sph = self.create_sphere_object()
+        self.assertAlmostEqual(sph.area(), 113.097, places=3)
+    
+    def test_circumference(self):
+        """Tests that the circumference is correctly calculated."""
+
+        sph = self.create_sphere_object()
+        self.assertAlmostEqual(sph.circumference(), 18.850, places=3)
+    
+    def test_is_inside_true(self):
+        """Tests if points that should be inside/on the boarder of the sphere are correctly classified."""
+
+        sph = self.create_sphere_object()
+        self.assertEqual(sph.is_inside(4, -3.5, 4), True)
+        self.assertEqual(sph.is_inside(6, -3, 3), True)
+    
+    def test_is_inside_false(self):
+        """Tests if points that should not be inside/on the boarder of the sphere are correctly classified."""
+
+        sph = self.create_sphere_object()
+        self.assertEqual(sph.is_inside(6, -3.1, 3), False)
+
+    def test_is_inside_str_in_parameter(self):
+        """Tests if a TypeError is raised when entering a str in the parameter."""
+
+        sph = self.create_sphere_object()
+        with self.assertRaises(TypeError):
+            sph.is_inside("2", 3, 4)
+        with self.assertRaises(TypeError):
+            sph.is_inside(2, "3", 4)
+        with self.assertRaises(TypeError):
+            sph.is_inside(2, 3, "4")
+
+    def test_equality_true(self):
+        """Tests the overloaded equality operator, using two Spheres with same sized radiuses."""
+
+        sph1 = Sphere(3, -2, 3, 4)
+        sph2 = Sphere(3, 3, -2, 4)
+        self.assertEqual(sph1 == sph2, True)
+
+    def test_equality_false(self):
+        """Tests the overloaded equality operator, using two Spheres with different radiuses."""        
+
+        sph1 = Sphere(3, -2, 3, 4)
+        sph2 = Sphere(4, -2, 3, 4)
+        self.assertEqual(sph1 == sph2, False)
+
+    def test_equality_not_same_type(self):
+        """Tests the overloaded equality operator, using two different geometrical figures."""        
+
+        sph = Sphere(3, -2, 3, 4)
+        circ = Circle(3, -2, 3)
+        self.assertEqual(sph == circ, False)
+
 if __name__ == "__main__":
     unittest.main() 
