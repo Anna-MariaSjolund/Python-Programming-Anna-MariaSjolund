@@ -20,9 +20,9 @@ class Circle(Geometry):
         Calculates the area of a circle.
     circumference() -> float
         Calculates the circumference of a circle.
-    is_inside() -> bool
+    is_inside(x_value : float, y_value : float) -> bool
         Checks if a point (x, y) is inside a circle.
-    __eq__() -> bool
+    __eq__(self, other : Circle) -> bool
         Checks if two circles are congruent.
     __repr__() -> str
         Returns information about the size and position of a circle.
@@ -81,7 +81,7 @@ class Circle(Geometry):
         """
         _ = Geometry.validation_numerical(x_value)
         _ = Geometry.validation_numerical(y_value)
-        eucl_distance = math.sqrt((self.x_coordinate - x_value)**2 + (self.y_coordinate-y_value)**2)
+        eucl_distance = math.sqrt((self.x_coordinate - x_value)**2 + (self.y_coordinate - y_value)**2)
         if eucl_distance <= self.radius:
             return True
         else: 
@@ -117,7 +117,7 @@ class Circle(Geometry):
     def __repr__(self):
         """Returns information about the size and position of a circle."""
 
-        return f"The radius of the circle is: {self.radius}. The geometric center is: ({self.x_coordinate}, {self.y_coordinate})."
+        return f"The radius of the circle is: {self.radius} length units. The geometric center is: ({self.x_coordinate}, {self.y_coordinate})."
 
 
     #GETTERS AND SETTERS
