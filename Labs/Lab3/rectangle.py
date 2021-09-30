@@ -53,12 +53,12 @@ class Rectangle(Geometry):
     def area(self):
         """Calculates the area of a rectangle."""
 
-        return self.length*self.breadth
+        return self.length*self.width
     
     def circumference(self):
         """Calculates the circumference of a rectangle."""
 
-        return ((self.length*2)+(self.breadth*2)) 
+        return ((self.length*2)+(self.width*2)) 
 
     def is_inside(self, x_value, y_value):
         """
