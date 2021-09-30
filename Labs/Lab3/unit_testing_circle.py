@@ -8,16 +8,19 @@ class TestGeometry(unittest.TestCase):
 
     def test_validation_numerical(self):
         """Tests if a TypeError is generated when entering a str."""
+
         with self.assertRaises(TypeError):
             Geometry.validation_numerical("3")
     
     def test_validation_numerical_above_zero_Type_Error(self):
         """Tests if a TypeError is raised when entering a str."""
+
         with self.assertRaises(TypeError):
             Geometry.validation_numerical_above_zero("3")
 
     def test_validation_numerical_above_zero_Value_Error(self):
         """Tests if a ValueError is generated when entering a value of 0 and below."""
+        
         with self.assertRaises(ValueError):
             Geometry.validation_numerical_above_zero(0)
         with self.assertRaises(ValueError):
@@ -84,6 +87,7 @@ class TestCircle(unittest.TestCase):
             circ.translate(4, "2")
     
     #TESTS CIRCLE METHODS
+
     def test_area(self):
         """Tests that the area is correctly calculated."""
 
