@@ -86,7 +86,9 @@ class Rectangle(Geometry):
 
         _ = Geometry.validation_numerical(x_value)
         _ = Geometry.validation_numerical(y_value)
-        if (self.x_coordinate-self.length/2) <= x_value <= (self.x_coordinate+self.length/2) and (self.y_coordinate-self.width/2) <= y_value <= (self.y_coordinate+self.width/2):
+
+        if ((self.x_coordinate-self.length/2) <= x_value <= (self.x_coordinate+self.length/2) 
+            and (self.y_coordinate-self.width/2) <= y_value <= (self.y_coordinate+self.width/2)):
             return True
         else:
             return False
