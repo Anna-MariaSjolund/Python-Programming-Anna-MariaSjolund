@@ -24,6 +24,8 @@ class Geometry(ABC):
         Calculates the circumference of a geometrical figure.
     is_inside() -> bool
         Checks if a point (x, y) is inside a geometrical figure.
+    plot_figure()
+        Plots a geometrical figure in a coordinate system. 
     __eq__() -> bool
         Checks if two geometrical figures are congruent.
     __repr__() -> str
@@ -95,6 +97,11 @@ class Geometry(ABC):
     @abstractmethod
     def is_inside(self) -> bool:
         """Checks if a point (x, y) is inside a geometrical figure."""
+
+        pass
+
+    def plot_figure(self):
+        "Plots a geometrical figure in a coordinate system."
 
         pass
 
