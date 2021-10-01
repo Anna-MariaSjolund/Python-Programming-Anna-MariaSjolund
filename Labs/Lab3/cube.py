@@ -1,5 +1,4 @@
 from rectangle import Rectangle
-from sphere import Sphere
 
 class Cube(Rectangle):
     """
@@ -25,7 +24,7 @@ class Cube(Rectangle):
     __repr__() -> str
         Returns information about the size and position of a cube.
     """
-    def __init__(self, side : float, x_coordinate:float=0, y_coordinate:float=0, z_coordinate:float=0) -> None: #https://www.pythonlikeyoumeanit.com/Module4_OOP/Inheritance.html
+    def __init__(self, side : float, x_coordinate:float=0, y_coordinate:float=0, z_coordinate:float=0) -> None: 
         """
         Parameters
         ----------
@@ -39,7 +38,7 @@ class Cube(Rectangle):
             The z_coordinate at the centre of a sphere (default 0).
         """
 
-        super().__init__(side, side, x_coordinate, y_coordinate)
+        super().__init__(side, side, x_coordinate, y_coordinate) #https://www.pythonlikeyoumeanit.com/Module4_OOP/Inheritance.html
         self.side = side
         self.z_coordinate = z_coordinate
 
