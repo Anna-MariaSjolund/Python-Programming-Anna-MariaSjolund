@@ -289,7 +289,7 @@ class TestSphere(unittest.TestCase):
         return Sphere(self.radius, self.x_coordinate, self.y_coordinate, self.z_coordinate)
 
     
-    #TESTS CREATION OF CIRCLE OBJECT
+    #TESTS CREATION OF SPHERE OBJECT
 
     def test_create_sphere_object(self):
         """Tests if a Sphere object has been set up with the correct values."""
@@ -397,6 +397,134 @@ class TestSphere(unittest.TestCase):
         sph = Sphere(3, -2, 3, 4)
         circ = Circle(3, -2, 3)
         self.assertEqual(sph == circ, False)
+
+
+#TEST CUBE SUBCLASS
+
+class TestCube(unittest.TestCase):
+    """Tests the Cube class."""
+
+    #CREATION OF CUBE OBJECT
+
+    def setUp(self) -> None:
+        """Initialises values to use for the side, x, y and z-coordinate."""
+
+        self.side, self.x_coordinate, self.y_coordinate, self.z_coordinate = 3, 3, -3, 3
+    
+    def create_cube_object(self) -> "Cube":
+        """Returns a Cube object, using the values from the setUp function."""
+
+        return Cube(self.side, self.x_coordinate, self.y_coordinate, self.z_coordinate)
+
+    
+    #TESTS CREATION OF SPHERE OBJECT
+
+    def test_create_cube_object(self):
+        """Tests if a Cube object has been set up with the correct values."""
+
+        cub = self.create_cube_object()
+        self.assertEqual((cub.side, cub.x_coordinate, cub.y_coordinate, cub.z_coordinate), (self.side, self.x_coordinate, self.y_coordinate, self.z_coordinate))
+
+    def test_create_cube_object_without_x_y_z(self):
+        """Tests if a Cube object has been set up correctly, when not entering the x, y and z-coordinates."""
+
+        cub = Cube(2)
+        self.assertEqual((cub.side, cub.x_coordinate, cub.y_coordinate, cub.z_coordinate), (2, 0, 0, 0))
+
+    def test_invalid_string_in_parameter(self):
+        """Tests if a TypeError is raised when entering a str in the parameters."""
+
+        with self.assertRaises(TypeError):
+            Cube("3", 3, -3, 3)
+        with self.assertRaises(TypeError):
+            Cube(3, "3", -3, 3)
+        with self.assertRaises(TypeError):
+            Cube(3, 3, "-3", 3)
+        with self.assertRaises(TypeError):
+            Cube(3, 3, -3, "3")
+    
+    def test_radius_zero_or_below(self):
+        """Tests if a ValueError is raised when trying to set the side to a value below 0."""
+
+        with self.assertRaises(ValueError):
+            Cube(-1, 2, 3, 4)
+
+    #TEST CUBE METHODS
+
+    def test_translate(self):
+        """Tests if the x, y and z-coordinates are changed correctly."""
+
+        cub = self.create_cube_object()
+        cub.translate(4, -3, -2)
+        self.assertEqual((cub.x_coordinate, cub.y_coordinate, cub.z_coordinate), (4, -3, -2))
+    
+    def test_translate_str_in_parameter(self):
+        """Tests if a TypeError is raised when entering a str in the parameter."""
+
+        cub = self.create_cube_object()        
+        with self.assertRaises(TypeError):
+            cub.translate("4", 3, 2)
+        with self.assertRaises(TypeError):
+            cub.translate(4, "3", 2)
+        with self.assertRaises(TypeError):
+            cub.translate(4, 3, "2")
+    
+    def test_area(self):
+        """Tests that the area is correctly calculated."""
+
+        cub = self.create_cube_object()
+        self.assertEqual(cub.area(), 54)
+    
+    def test_circumference(self):
+        """Tests that the circumference is correctly calculated."""
+
+        cub = self.create_cube_object()
+        self.assertEqual(cub.circumference(), 12)
+    
+    def test_is_inside_true(self):
+        """Tests if points that should be inside/on the boarder of the cube are correctly classified."""
+
+        cub = self.create_cube_object()
+        self.assertEqual(cub.is_inside(4, -3.5, 4), True)
+        self.assertEqual(cub.is_inside(4.5, -4.5, 4.5), True)
+    
+    def test_is_inside_false(self):
+        """Tests if points that should not be inside/on the boarder of the sphere are correctly classified."""
+
+        cub = self.create_cube_object()
+        self.assertEqual(cub.is_inside(4.6, -4.5, 4.5), False)
+
+    def test_is_inside_str_in_parameter(self):
+        """Tests if a TypeError is raised when entering a str in the parameter."""
+
+        cub = self.create_cube_object()
+        with self.assertRaises(TypeError):
+            cub.is_inside("2", 3, 4)
+        with self.assertRaises(TypeError):
+            cub.is_inside(2, "3", 4)
+        with self.assertRaises(TypeError):
+            cub.is_inside(2, 3, "4")
+
+    def test_equality_true(self):
+        """Tests the overloaded equality operator, using two Cubes with same sized sides."""
+
+        cub1 = Cube(3, -2, 3, 4)
+        cub2 = Cube(3, 3, -2, 4)
+        self.assertEqual(cub1 == cub2, True)
+
+    def test_equality_false(self):
+        """Tests the overloaded equality operator, using two Cubes with different sides."""        
+
+        cub1 = Cube(3, -2, 3, 4)
+        cub2 = Cube(4, -2, 3, 4)
+        self.assertEqual(cub1 == cub2, False)
+
+    def test_equality_not_same_type(self):
+        """Tests the overloaded equality operator, using two different geometrical figures."""        
+
+        cub = Cube(3, -2, 3, 4)
+        sph = Sphere(3, -2, 3, 4)
+        self.assertEqual(cub == sph, False)
 
 if __name__ == "__main__":
     unittest.main() 
