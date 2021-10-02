@@ -1,5 +1,6 @@
 from geometry import Geometry
 import math
+import matplotlib.pyplot as plt
 
 class Circle(Geometry):
     """
@@ -86,7 +87,43 @@ class Circle(Geometry):
             return True
         else: 
             return False
-    
+
+    def plot_figure(self, fixed_scale10:bool = False) -> None: #https://www.geeksforgeeks.org/matplotlib-patches-rectangle-in-python/
+        """
+        Plots a Circle object in a coordinate system.
+        
+        Arguments
+        ---------
+        fixed_scale10 : bool
+            If True and if the edges of the rectangles are between -10 and 10 on the x and y-axis,
+                the method will show the object in a coordinate system scaled between -10 and 10.
+            If False or if the edges of the rectangles are not between -10 and 10 on the x and y-axis, 
+                the method will zoom in on the figure.
+
+        Returns 
+        -------
+        None
+        """
+
+        fig = plt.figure(dpi=100)
+        ax = fig.add_subplot()
+
+        lowest_x = self.x_coordinate-self.radius
+        highest_x = self.x_coordinate+self.radius
+        lowest_y = self.y_coordinate-self.radius
+        highest_y = self.y_coordinate+self.radius
+
+        circle_figure = plt.Circle((self.x_coordinate, self.y_coordinate), self.radius, facecolor="cornflowerblue", edgecolor="black")
+        ax.add_patch(circle_figure)
+        ax.set_aspect('equal', adjustable='box') #https://www.delftstack.com/howto/matplotlib/how-to-make-a-square-plot-with-equal-axes-in-matplotlib/
+
+        if fixed_scale10 == True and lowest_x >= -10 and lowest_y >= -10 and highest_x <= 10 and highest_y <= 10:
+            ax.set(xlim=(-10, 10), ylim=(-10, 10), xticks=[-10, -7.5, -5, -2.5, 0, 2.5, 5, 7.5, 10])
+        else:
+            ax.set(xlim=(lowest_x-self.radius, highest_x+self.radius), ylim=(lowest_y-self.radius, highest_y+self.radius))
+
+        ax.set(title=(f"Circle Plotted in a Coordinate System"), xlabel=("x"), ylabel=("y"))
+
     def __eq__(self, other) -> bool:
         """
         Checks if two objects are congruent.

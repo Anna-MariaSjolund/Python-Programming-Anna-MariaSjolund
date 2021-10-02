@@ -1,5 +1,7 @@
+from matplotlib import colors
 from geometry import Geometry
-from math import sqrt
+import matplotlib.pyplot as plt
+from matplotlib.patches import Rectangle as plt_rect
 
 class Rectangle(Geometry):
     """
@@ -93,6 +95,43 @@ class Rectangle(Geometry):
         else:
             return False
     
+    def plot_figure(self, fixed_scale10:bool = False) -> None: #https://www.geeksforgeeks.org/matplotlib-patches-rectangle-in-python/
+        """
+        Plots a Rectangle object in a coordinate system.
+        
+        Arguments
+        ---------
+        fixed_scale10 : bool
+            If True and if the edges of the rectangles are between -10 and 10 on the x and y-axis,
+                the method will show the object in a coordinate system scaled between -10 and 10.
+            If False or if the edges of the rectangles are not between -10 and 10 on the x and y-axis, 
+                the method will zoom in on the figure.
+
+        Returns 
+        -------
+        None
+        """
+
+        fig = plt.figure(dpi=100)
+        ax = fig.add_subplot()
+
+        lowest_x = self.x_coordinate-self.length/2
+        highest_x = self.x_coordinate+self.length/2 
+        lowest_y = self.y_coordinate-self.width/2
+        highest_y = self.y_coordinate+self.width/2
+
+        rectangle_figure = plt_rect((lowest_x, lowest_y), self.length, self.width, facecolor="forestgreen", edgecolor="black")
+        ax.add_patch(rectangle_figure)
+        ax.set_aspect("equal", adjustable="box") #https://www.delftstack.com/howto/matplotlib/how-to-make-a-square-plot-with-equal-axes-in-matplotlib/
+
+        if fixed_scale10 == True and lowest_x >= -10 and lowest_y >= -10 and highest_x <= 10 and highest_y <= 10:
+            ax.set(xlim=(-10, 10), ylim=(-10, 10), xticks=[-10, -7.5, -5, -2.5, 0, 2.5, 5, 7.5, 10])
+        else:
+            ax.set(xlim=(lowest_x-self.length, highest_x+self.length), ylim=(lowest_y-self.width, highest_y+self.width))
+
+        ax.set(title=(f"Rectangle Plotted in a Coordinate System"), xlabel=("x"), ylabel=("y"))
+        
+        
     def __eq__(self, other):
         """
         Checks if two objects are congruent.
