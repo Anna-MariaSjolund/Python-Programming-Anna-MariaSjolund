@@ -32,7 +32,7 @@ class TestGeometry(unittest.TestCase):
             Geometry.validation_numerical_above_zero(-3)
 
 
-#TEST CIRCLE SUBCLASS
+#TEST CIRCLE SUBCLASS (AND TRANSLATE METHOD INHERITED FROM THE GEOMETRY CLASS)
 
 class TestCircle(unittest.TestCase):
     """Tests the Circle class."""
