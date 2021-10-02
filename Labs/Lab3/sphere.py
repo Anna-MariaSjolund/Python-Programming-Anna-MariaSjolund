@@ -1,5 +1,7 @@
 from circle import Circle
 import math
+import matplotlib.pyplot as plt
+import numpy as np
 
 class Sphere(Circle):
     """
@@ -22,6 +24,8 @@ class Sphere(Circle):
         Sets the x, y and z-coordinates to new values.
     area() -> float
         Calculates the surface area of a sphere.
+    volume() -> float:
+        Calculates the volume of a sphere.
     is_inside(x_value : float, y_value : float, z_value : float) -> bool
         Checks if a point (x, y, z) is inside a sphere.
     __repr__() -> str
@@ -79,6 +83,11 @@ class Sphere(Circle):
 
         return 4*math.pi*(self.radius**2)
 
+    def volume(self) -> float:
+        """Calculates the volume of a sphere."""
+
+        return 4/3*math.pi*(self.radius**3)
+
     def is_inside(self, x_value:float=0, y_value:float=0, z_value:float=0) -> bool:
         """
         Checks if a point (x, y, z) is inside a sphere.
@@ -113,6 +122,22 @@ class Sphere(Circle):
             return True
         else: 
             return False
+
+    def plot_figure(self):
+        """Create a plot of the sphere in 3D."""
+        
+        fig = plt.figure(dpi=100)
+        ax = fig.add_subplot(111, projection='3d')
+
+        u, v = np.mgrid[0:2*np.pi:20j, 0:np.pi:10j]
+        x = self.x_coordinate + self.radius * np.cos(u)*np.sin(v)
+        y = self.y_coordinate + self.radius*np.sin(u)*np.sin(v)
+        z = self.z_coordinate + self.radius*np.cos(v)
+
+        ax.plot_surface(x, y, z, cmap="Blues")
+        ax.set_title("Sphere")
+
+        plt.show()
 
     def __repr__(self) -> str:
         """Returns information about the size and position of a circle."""
