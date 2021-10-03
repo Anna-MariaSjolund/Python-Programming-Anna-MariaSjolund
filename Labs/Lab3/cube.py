@@ -1,4 +1,9 @@
 from rectangle import Rectangle
+from mpl_toolkits.mplot3d import Axes3D
+import matplotlib.pyplot as plt
+import numpy as np
+from itertools import product, combinations
+
 
 class Cube(Rectangle):
     """
@@ -19,6 +24,8 @@ class Cube(Rectangle):
     -------
     area() -> float
         Calculates the surface area of a cube.
+    volume() -> float:
+        Calculates the volume of a cube.
     is_inside(x_value : float, y_value : float, z_value : float) -> bool
         Checks if a point (x, y, z) is inside a cube.
     __repr__() -> str
@@ -76,6 +83,10 @@ class Cube(Rectangle):
 
         return 6*(self.side**2)
 
+    def volume(self) -> float:
+        """Calculates the volume of a cube."""
+
+        return self.side**3
 
     def is_inside(self, x_value:float, y_value:float, z_value:float) -> bool:
         """
@@ -112,6 +123,52 @@ class Cube(Rectangle):
             return True
         else:
             return False
+
+    def plot_figure(self, fixed_scale10=False):
+        """Plot a cube in 3D."""
+        def cuboid_data(coordinates, size):
+            # code taken from
+            # https://stackoverflow.com/a/35978146/4124317
+            # suppose axis direction: x: to left; y: to inside; z: to upper
+            # get the length, width, and height
+            l, w, h = size, size, size
+            x = [[coordinates[0], coordinates[0] + l, coordinates[0] + l, coordinates[0], coordinates[0]],  
+                [coordinates[0], coordinates[0] + l, coordinates[0] + l, coordinates[0], coordinates[0]],  
+                [coordinates[0], coordinates[0] + l, coordinates[0] + l, coordinates[0], coordinates[0]],  
+                [coordinates[0], coordinates[0] + l, coordinates[0] + l, coordinates[0], coordinates[0]]]  
+            y = [[coordinates[1], coordinates[1], coordinates[1] + w, coordinates[1] + w, coordinates[1]],  
+                [coordinates[1], coordinates[1], coordinates[1] + w, coordinates[1] + w, coordinates[1]],  
+                [coordinates[1], coordinates[1], coordinates[1], coordinates[1], coordinates[1]],          
+                [coordinates[1] + w, coordinates[1] + w, coordinates[1] + w, coordinates[1] + w, coordinates[1] + w]]   
+            z = [[coordinates[2], coordinates[2], coordinates[2], coordinates[2], coordinates[2]],                       
+                [coordinates[2] + h, coordinates[2] + h, coordinates[2] + h, coordinates[2] + h, coordinates[2] + h],   
+                [coordinates[2], coordinates[2], coordinates[2] + h, coordinates[2] + h, coordinates[2]],               
+                [coordinates[2], coordinates[2], coordinates[2] + h, coordinates[2] + h, coordinates[2]]]               
+            return np.array(x), np.array(y), np.array(z)
+
+        fig = plt.figure()
+        ax = fig.gca(projection='3d')
+        ax.set_aspect('auto')
+
+        X, Y, Z = cuboid_data((self.x_coordinate-self.side/2, self.y_coordinate-self.side/2, self.z_coordinate-self.side/2), self.side)
+        ax.plot_surface(X, Y, Z, rstride=1, cstride=1)
+
+        lowest_x = self.x_coordinate-self.side/2
+        highest_x = self.x_coordinate+self.side/2
+        lowest_y = self.y_coordinate-self.side/2
+        highest_y = self.y_coordinate+self.side/2
+        lowest_z = self.z_coordinate-self.side/2
+        highest_z = self.z_coordinate+self.side/2
+
+        if fixed_scale10 == True and lowest_x >= -10 and lowest_y >= -10 and lowest_z >= -10 and highest_x <= 10 and highest_y <= 10 and highest_z <= 10:
+            ax.set(xlim=(-10, 10), ylim=(-10, 10), zlim=(-10, 10))
+            ticks_list=[-10, -7.5, -5, -2.5, 0, 2.5, 5, 7.5, 10]
+            ax.set(xticks=ticks_list, yticks=ticks_list, zticks=ticks_list)
+
+        ax.set(xlabel='x', ylabel='y', zlabel='z')
+        ax.set_title("Cube")
+
+        plt.show()
 
     def __repr__(self):
         """Returns information about the size and position of a cube."""
