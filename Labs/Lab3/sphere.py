@@ -123,18 +123,32 @@ class Sphere(Circle):
         else: 
             return False
 
-    def plot_figure(self):
+    def plot_figure(self, fixed_scale10=False): #Reference: https://stackoverflow.com/questions/40460960/how-to-plot-a-sphere-when-we-are-given-a-central-point-and-a-radius-size
         """Create a plot of the sphere in 3D."""
-        
+
         fig = plt.figure(dpi=100)
         ax = fig.add_subplot(111, projection='3d')
 
-        u, v = np.mgrid[0:2*np.pi:20j, 0:np.pi:10j]
-        x = self.x_coordinate + self.radius * np.cos(u)*np.sin(v)
-        y = self.y_coordinate + self.radius*np.sin(u)*np.sin(v)
-        z = self.z_coordinate + self.radius*np.cos(v)
+        u, v = np.mgrid[0:2*np.pi:20j, 0:np.pi:20j]
+        x = self.x_coordinate + self.radius * np.cos(u) * np.sin(v)
+        y = self.y_coordinate + self.radius * np.sin(u) * np.sin(v)
+        z = self.z_coordinate + self.radius * np.cos(v)
 
         ax.plot_surface(x, y, z, cmap="Blues")
+
+        lowest_x = self.x_coordinate-self.radius
+        highest_x = self.x_coordinate+self.radius
+        lowest_y = self.y_coordinate-self.radius
+        highest_y = self.y_coordinate+self.radius
+        lowest_z = self.z_coordinate-self.radius
+        highest_z = self.z_coordinate+self.radius
+
+        if fixed_scale10 == True and lowest_x >= -10 and lowest_y >= -10 and lowest_z >= -10 and highest_x <= 10 and highest_y <= 10 and highest_z <= 10:
+            ax.set(xlim=(-10, 10), ylim=(-10, 10), zlim=(-10, 10))
+            ticks_list=[-10, -7.5, -5, -2.5, 0, 2.5, 5, 7.5, 10]
+            ax.set(xticks=ticks_list, yticks=ticks_list, zticks=ticks_list)
+        
+        ax.set(xlabel='x', ylabel='y', zlabel='z')
         ax.set_title("Sphere")
 
         plt.show()
