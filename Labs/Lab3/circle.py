@@ -115,7 +115,7 @@ class Circle(Geometry):
 
         circle_figure = plt.Circle((self.x_coordinate, self.y_coordinate), self.radius, facecolor="cornflowerblue", edgecolor="black")
         ax.add_patch(circle_figure)
-        ax.set_aspect('equal', adjustable='box') #https://www.delftstack.com/howto/matplotlib/how-to-make-a-square-plot-with-equal-axes-in-matplotlib/
+        ax.set_aspect('equal', adjustable='box') #Reference: https://www.delftstack.com/howto/matplotlib/how-to-make-a-square-plot-with-equal-axes-in-matplotlib/
 
         if fixed_scale10 == True and lowest_x >= -10 and lowest_y >= -10 and highest_x <= 10 and highest_y <= 10:
             ax.set(xlim=(-10, 10), ylim=(-10, 10), xticks=[-10, -7.5, -5, -2.5, 0, 2.5, 5, 7.5, 10])
