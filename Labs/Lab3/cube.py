@@ -1,9 +1,7 @@
 from rectangle import Rectangle
-from mpl_toolkits.mplot3d import Axes3D
 import matplotlib.pyplot as plt
+from mpl_toolkits.mplot3d import Axes3D
 import numpy as np
-from itertools import product, combinations
-
 
 class Cube(Rectangle):
     """
@@ -28,6 +26,9 @@ class Cube(Rectangle):
         Calculates the volume of a cube.
     is_inside(x_value : float, y_value : float, z_value : float) -> bool
         Checks if a point (x, y, z) is inside a cube.
+    plot_figure(fixed_scale10 : bool, point : tuple) -> None
+        Creates a Cube object in 3D, in a coordinate system.
+    Creates a Sphere object in 3D, in a coordinate system.
     __repr__() -> str
         Returns information about the size and position of a cube.
     """
@@ -125,8 +126,9 @@ class Cube(Rectangle):
         else:
             return False
 
-    def plot_figure(self, fixed_scale10=False, point:tuple=None) -> None: #Reference: https://stackoverflow.com/questions/33540109/plot-surfaces-on-a-cube/33542678
-        """Creates a Sphere object in 3D, in a coordinate system.
+    def plot_figure(self, fixed_scale10:bool=False, point:tuple=None) -> None: #Reference: https://stackoverflow.com/questions/33540109/plot-surfaces-on-a-cube/33542678
+        """
+        Creates a Cube object in 3D, in a coordinate system. 
         
         Arguments
         ---------
@@ -135,8 +137,9 @@ class Cube(Rectangle):
                 the cube will be shown in a coordinate system scaled between -10 and 10.
             If False or if the edges of the cube are not located between -10 and 10 on the x, y and z-axis, 
                 the plot will zoom in on the cube.
+            (default False)
         point : tuple
-            Prints a point (x, y, z) in the coordinate system (default None).
+            Plots a point (x, y, z) in the coordinate system (default None).
 
         Returns 
         -------
@@ -155,7 +158,7 @@ class Cube(Rectangle):
         Z = (np.cos(Theta) / np.sqrt(2)) * self.side + self.z_coordinate
 
         #Plots the surface of the cube
-        ax.plot_surface(X, Y, Z, cmap="Blues", alpha=0.5)
+        ax.plot_surface(X, Y, Z, cmap="Greens", alpha=0.3)
 
         #Plots a point at the specified coordinates 
         if point != None:
@@ -174,7 +177,7 @@ class Cube(Rectangle):
             ax.set(xlim=(-10, 10), ylim=(-10, 10), zlim=(-10, 10))
 
         #Sets title and labels
-        ax.set(title="", xlabel='x', ylabel='y', zlabel='z')
+        ax.set(title=f"Side Length: {self.side}, Center: ({self.x_coordinate}, {self.y_coordinate}, {self.z_coordinate})", xlabel="x", ylabel="y", zlabel="z")
 
         plt.show()
 

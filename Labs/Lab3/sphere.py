@@ -28,6 +28,8 @@ class Sphere(Circle):
         Calculates the volume of a sphere.
     is_inside(x_value : float, y_value : float, z_value : float) -> bool
         Checks if a point (x, y, z) is inside a sphere.
+    plot_figure(fixed_scale10 : bool, point : tuple) -> None
+        Creates a Sphere object in 3D, in a coordinate system.
     __repr__() -> str
         Returns information about the size and position of a sphere.
     """
@@ -88,7 +90,7 @@ class Sphere(Circle):
 
         return 4/3*math.pi*(self.radius**3)
 
-    def is_inside(self, x_value:float=0, y_value:float=0, z_value:float=0) -> bool:
+    def is_inside(self, x_value:float, y_value:float, z_value:float) -> bool:
         """
         Checks if a point (x, y, z) is inside a sphere.
 
@@ -123,8 +125,9 @@ class Sphere(Circle):
         else: 
             return False
 
-    def plot_figure(self, fixed_scale10=False, point:tuple=None): #Reference: https://stackoverflow.com/questions/40460960/how-to-plot-a-sphere-when-we-are-given-a-central-point-and-a-radius-size
-        """Creates a Sphere object in 3D, in a coordinate system.
+    def plot_figure(self, fixed_scale10:bool=False, point:tuple=None) -> None: #Reference: https://stackoverflow.com/questions/40460960/how-to-plot-a-sphere-when-we-are-given-a-central-point-and-a-radius-size
+        """
+        Creates a Sphere object in 3D, in a coordinate system.
         
         Arguments
         ---------
@@ -133,8 +136,9 @@ class Sphere(Circle):
                 the sphere will be shown in a coordinate system scaled between -10 and 10.
             If False or if the edges of the sphere are not located between -10 and 10 on the x, y and z-axis, 
                 the plot will zoom in on the sphere.
+            (default False)
         point : tuple
-            Prints a point (x, y, z) in the coordinate system (default None).
+            Plots a point (x, y, z) in the coordinate system (default None).
 
         Returns 
         -------
@@ -151,7 +155,7 @@ class Sphere(Circle):
         Y = self.y_coordinate + self.radius * np.sin(u) * np.sin(v)
         Z = self.z_coordinate + self.radius * np.cos(v)
 
-        #Plot the surface of the sphere
+        #Plots the surface of the sphere
         ax.plot_surface(X, Y, Z, cmap="Blues", alpha=0.5)
 
         #Plots a point at the specified coordinates 
@@ -171,7 +175,7 @@ class Sphere(Circle):
             ax.set(xlim=(-10, 10), ylim=(-10, 10), zlim=(-10, 10))
         
         #Sets the title and labels
-        ax.set(title="Sphere", xlabel='x', ylabel='y', zlabel='z')
+        ax.set(title=f"Radius: {self.radius}, Center: ({self.x_coordinate}, {self.y_coordinate}, {self.z_coordinate})", xlabel='x', ylabel='y', zlabel='z')
         plt.show()
 
     def __repr__(self) -> str:
@@ -180,11 +184,11 @@ class Sphere(Circle):
         return f"The radius of the sphere is: {self.radius} length units. The geometric center is: ({self.x_coordinate}, {self.y_coordinate}, {self.z_coordinate})."
 
 
-    #GETTERS AND SETTERS
+    #GETTERS AND SETTERS 
 
     @property
     def z_coordinate(self):
-        """A getter method, returning the private z_coordinate."""
+        """Returns the private z-coordinate, as a private variable."""
 
         return self._z_coordinate
 
