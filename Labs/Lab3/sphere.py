@@ -43,7 +43,7 @@ class Sphere(Circle):
         y_coordinate : float
             The y-coordinate at the centre of a sphere (default 0).
         z_coordinate : float
-            The z_coordinate at the centre of a sphere (default 0).
+            The z-coordinate at the centre of a sphere (default 0).
         """
 
         super().__init__(radius, x_coordinate, y_coordinate)
@@ -115,7 +115,7 @@ class Sphere(Circle):
         """      
         
         super().is_inside(x_value, y_value)
-        _ = Circle.validation_numerical(z_value)
+        Circle.validation_numerical(z_value)
 
         eucl_distance = math.sqrt((self.x_coordinate - x_value)**2 + (self.y_coordinate - y_value)**2 + (self.z_coordinate - z_value)**2)
         if eucl_distance <= self.radius:
@@ -123,19 +123,42 @@ class Sphere(Circle):
         else: 
             return False
 
-    def plot_figure(self, fixed_scale10=False): #Reference: https://stackoverflow.com/questions/40460960/how-to-plot-a-sphere-when-we-are-given-a-central-point-and-a-radius-size
-        """Create a plot of the sphere in 3D."""
+    def plot_figure(self, fixed_scale10=False, point:tuple=None): #Reference: https://stackoverflow.com/questions/40460960/how-to-plot-a-sphere-when-we-are-given-a-central-point-and-a-radius-size
+        """Creates a Sphere object in 3D, in a coordinate system.
+        
+        Arguments
+        ---------
+        fixed_scale10 : bool
+            If True and if the edges of the sphere are located between -10 and 10 on the x, y and z-axis,
+                the sphere will be shown in a coordinate system scaled between -10 and 10.
+            If False or if the edges of the sphere are not located between -10 and 10 on the x, y and z-axis, 
+                the plot will zoom in on the sphere.
+        point : tuple
+            Prints a point (x, y, z) in the coordinate system (default None).
 
+        Returns 
+        -------
+        None
+        """
+
+        #Sets up the figure and axes
         fig = plt.figure(dpi=100)
         ax = fig.add_subplot(111, projection='3d')
 
+        #Creates three arrays of spherical coordinates for the X, Y and Z-axis.
         u, v = np.mgrid[0:2*np.pi:20j, 0:np.pi:20j]
-        x = self.x_coordinate + self.radius * np.cos(u) * np.sin(v)
-        y = self.y_coordinate + self.radius * np.sin(u) * np.sin(v)
-        z = self.z_coordinate + self.radius * np.cos(v)
+        X = self.x_coordinate + self.radius * np.cos(u) * np.sin(v)
+        Y = self.y_coordinate + self.radius * np.sin(u) * np.sin(v)
+        Z = self.z_coordinate + self.radius * np.cos(v)
 
-        ax.plot_surface(x, y, z, cmap="Blues")
+        #Plot the surface of the sphere
+        ax.plot_surface(X, Y, Z, cmap="Blues", alpha=0.5)
 
+        #Plots a point at the specified coordinates 
+        if point != None:
+            ax.plot(point[0], point[1], point[2], "ko")
+
+        #Creates variables for the edges of the sphere
         lowest_x = self.x_coordinate-self.radius
         highest_x = self.x_coordinate+self.radius
         lowest_y = self.y_coordinate-self.radius
@@ -143,20 +166,18 @@ class Sphere(Circle):
         lowest_z = self.z_coordinate-self.radius
         highest_z = self.z_coordinate+self.radius
 
+        #Sets the scale, depending on the values of the sphere and if fixed_scale10 is set to True
         if fixed_scale10 == True and lowest_x >= -10 and lowest_y >= -10 and lowest_z >= -10 and highest_x <= 10 and highest_y <= 10 and highest_z <= 10:
             ax.set(xlim=(-10, 10), ylim=(-10, 10), zlim=(-10, 10))
-            ticks_list=[-10, -7.5, -5, -2.5, 0, 2.5, 5, 7.5, 10]
-            ax.set(xticks=ticks_list, yticks=ticks_list, zticks=ticks_list)
         
-        ax.set(xlabel='x', ylabel='y', zlabel='z')
-        ax.set_title("Sphere")
-
+        #Sets the title and labels
+        ax.set(title="Sphere", xlabel='x', ylabel='y', zlabel='z')
         plt.show()
 
     def __repr__(self) -> str:
-        """Returns information about the size and position of a circle."""
+        """Returns information about the size and position of a sphere."""
 
-        return f"The radius of the sphere is: {self.radius} length units. The center is: ({self.x_coordinate}, {self.y_coordinate}, {self.z_coordinate})."
+        return f"The radius of the sphere is: {self.radius} length units. The geometric center is: ({self.x_coordinate}, {self.y_coordinate}, {self.z_coordinate})."
 
 
     #GETTERS AND SETTERS

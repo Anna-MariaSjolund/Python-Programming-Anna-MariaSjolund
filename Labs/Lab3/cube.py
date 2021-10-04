@@ -31,28 +31,29 @@ class Cube(Rectangle):
     __repr__() -> str
         Returns information about the size and position of a cube.
     """
-    def __init__(self, side : float, x_coordinate:float=0, y_coordinate:float=0, z_coordinate:float=0) -> None: 
+
+    def __init__(self, side:float, x_coordinate:float=0, y_coordinate:float=0, z_coordinate:float=0) -> None: 
         """
         Parameters
         ----------
         side : float
             The length of the side of the cube.
         x_coordinate : float
-            The x-coordinate at the centre of a sphere (default 0).
+            The x-coordinate at the centre of a cube (default 0).
         y_coordinate : float
-            The y-coordinate at the centre of a sphere (default 0).
+            The y-coordinate at the centre of a cube (default 0).
         z_coordinate : float
-            The z_coordinate at the centre of a sphere (default 0).
+            The z-coordinate at the centre of a cube (default 0).
         """
 
-        super().__init__(side, side, x_coordinate, y_coordinate) #https://www.pythonlikeyoumeanit.com/Module4_OOP/Inheritance.html
+        super().__init__(side, side, x_coordinate, y_coordinate) #The side (length) will be passed in as both width and height - inherited from the Rectangle class. Reference: https://www.pythonlikeyoumeanit.com/Module4_OOP/Inheritance.html
         self.side = side
         self.z_coordinate = z_coordinate
 
 
     #METHODS
 
-    def translate(self, x_new_value, y_new_value, z_new_value) -> float:
+    def translate(self, x_new_value:float, y_new_value:float, z_new_value:float) -> float:
         """
         Sets the x, y and z-coordinates to new values.
 
@@ -75,7 +76,7 @@ class Cube(Rectangle):
         None
         """
 
-        super().translate(x_new_value, y_new_value)
+        super().translate(x_new_value, y_new_value) #Inherits the translate-method from the Rectangle class  - validates and sets the x and y-coordinates. Reference: https://www.geeksforgeeks.org/python-call-parent-class-method/
         self._z_coordinate = Rectangle.validation_numerical(z_new_value)
         
     def area(self) -> float:
@@ -115,7 +116,7 @@ class Cube(Rectangle):
         """
 
         super().is_inside(x_value, y_value)
-        _ = Rectangle.validation_numerical(z_value)
+        Rectangle.validation_numerical(z_value)
         
         if ((self.x_coordinate-self.side/2) <= x_value <= (self.x_coordinate+self.side/2) 
             and (self.y_coordinate-self.side/2) <= y_value <= (self.y_coordinate+self.side/2) 
@@ -124,35 +125,43 @@ class Cube(Rectangle):
         else:
             return False
 
-    def plot_figure(self, fixed_scale10=False):
-        """Plot a cube in 3D."""
-        def cuboid_data(coordinates, size):
-            # code taken from
-            # https://stackoverflow.com/a/35978146/4124317
-            # suppose axis direction: x: to left; y: to inside; z: to upper
-            # get the length, width, and height
-            l, w, h = size, size, size
-            x = [[coordinates[0], coordinates[0] + l, coordinates[0] + l, coordinates[0], coordinates[0]],  
-                [coordinates[0], coordinates[0] + l, coordinates[0] + l, coordinates[0], coordinates[0]],  
-                [coordinates[0], coordinates[0] + l, coordinates[0] + l, coordinates[0], coordinates[0]],  
-                [coordinates[0], coordinates[0] + l, coordinates[0] + l, coordinates[0], coordinates[0]]]  
-            y = [[coordinates[1], coordinates[1], coordinates[1] + w, coordinates[1] + w, coordinates[1]],  
-                [coordinates[1], coordinates[1], coordinates[1] + w, coordinates[1] + w, coordinates[1]],  
-                [coordinates[1], coordinates[1], coordinates[1], coordinates[1], coordinates[1]],          
-                [coordinates[1] + w, coordinates[1] + w, coordinates[1] + w, coordinates[1] + w, coordinates[1] + w]]   
-            z = [[coordinates[2], coordinates[2], coordinates[2], coordinates[2], coordinates[2]],                       
-                [coordinates[2] + h, coordinates[2] + h, coordinates[2] + h, coordinates[2] + h, coordinates[2] + h],   
-                [coordinates[2], coordinates[2], coordinates[2] + h, coordinates[2] + h, coordinates[2]],               
-                [coordinates[2], coordinates[2], coordinates[2] + h, coordinates[2] + h, coordinates[2]]]               
-            return np.array(x), np.array(y), np.array(z)
+    def plot_figure(self, fixed_scale10=False, point:tuple=None) -> None: #Reference: https://stackoverflow.com/questions/33540109/plot-surfaces-on-a-cube/33542678
+        """Creates a Sphere object in 3D, in a coordinate system.
+        
+        Arguments
+        ---------
+        fixed_scale10 : bool
+            If True and if the edges of the cube are located between -10 and 10 on the x, y and z-axis,
+                the cube will be shown in a coordinate system scaled between -10 and 10.
+            If False or if the edges of the cube are not located between -10 and 10 on the x, y and z-axis, 
+                the plot will zoom in on the cube.
+        point : tuple
+            Prints a point (x, y, z) in the coordinate system (default None).
 
-        fig = plt.figure()
-        ax = fig.gca(projection='3d')
-        ax.set_aspect('auto')
+        Returns 
+        -------
+        None
+        """
 
-        X, Y, Z = cuboid_data((self.x_coordinate-self.side/2, self.y_coordinate-self.side/2, self.z_coordinate-self.side/2), self.side)
-        ax.plot_surface(X, Y, Z, rstride=1, cstride=1)
+        #Sets up the figure and axes
+        fig = plt.figure(dpi=100)
+        ax = fig.add_subplot(projection="3d")
 
+        #Returns three arrays of spherical coordinates, for the X, Y and Z-axis
+        phi = np.arange(1, 10, 2) * np.pi / 4
+        Phi, Theta = np.meshgrid(phi, phi)
+        X = (np.cos(Phi) * np.sin(Theta)) * self.side + self.x_coordinate
+        Y = (np.sin(Phi) * np.sin(Theta)) * self.side + self.y_coordinate
+        Z = (np.cos(Theta) / np.sqrt(2)) * self.side + self.z_coordinate
+
+        #Plots the surface of the cube
+        ax.plot_surface(X, Y, Z, cmap="Blues", alpha=0.5)
+
+        #Plots a point at the specified coordinates 
+        if point != None:
+            ax.plot(point[0], point[1], point[2], "ko")
+        
+        #Creates variables for the edges of the cube
         lowest_x = self.x_coordinate-self.side/2
         highest_x = self.x_coordinate+self.side/2
         lowest_y = self.y_coordinate-self.side/2
@@ -160,13 +169,12 @@ class Cube(Rectangle):
         lowest_z = self.z_coordinate-self.side/2
         highest_z = self.z_coordinate+self.side/2
 
+        #Sets the scale, depending on the values of the cube and if fixed_scale10 is set to True
         if fixed_scale10 == True and lowest_x >= -10 and lowest_y >= -10 and lowest_z >= -10 and highest_x <= 10 and highest_y <= 10 and highest_z <= 10:
             ax.set(xlim=(-10, 10), ylim=(-10, 10), zlim=(-10, 10))
-            ticks_list=[-10, -7.5, -5, -2.5, 0, 2.5, 5, 7.5, 10]
-            ax.set(xticks=ticks_list, yticks=ticks_list, zticks=ticks_list)
 
-        ax.set(xlabel='x', ylabel='y', zlabel='z')
-        ax.set_title("Cube")
+        #Sets title and labels
+        ax.set(title="", xlabel='x', ylabel='y', zlabel='z')
 
         plt.show()
 
@@ -180,13 +188,13 @@ class Cube(Rectangle):
 
     @property
     def side(self) -> float:
-        """A getter method, returning the private side."""
+        """Returns the side, as a private variable.."""
 
         return self._side
 
     @property
     def z_coordinate(self) -> float:
-        """A getter method, returning the private z_coordinate."""
+        """Returns the z-coordinate, as a private variable."""
 
         return self._z_coordinate
     
