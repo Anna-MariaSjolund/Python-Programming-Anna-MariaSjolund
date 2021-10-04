@@ -181,13 +181,13 @@ class Geometry(ABC):
 
     @property
     def x_coordinate(self) -> float:
-        """Returns the private x-coordinate."""
+        """Returns the x-coordinate, as a private variable.."""
 
         return self._x_coordinate
 
     @property
     def y_coordinate(self) -> float:
-        """Returns the private y-coordinate."""
+        """Returns the y-coordinate, as a private variable.."""
 
         return self._y_coordinate
     
