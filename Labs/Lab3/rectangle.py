@@ -25,6 +25,8 @@ class Rectangle(Geometry):
         Calculates the circumference of a rectangle.
     is_inside() -> bool
         Checks if a point (x, y) is inside a rectangle.
+    plot_figure(fixed_scale10 : bool, point : tuple) -> None
+        Plots a Rectangle object in a coordinate system.
     __eq__() -> bool
         Checks if two rectangles are congruent.
     __repr__() -> str
@@ -102,12 +104,13 @@ class Rectangle(Geometry):
         Arguments
         ---------
         fixed_scale10 : bool
-            If True and if the edges of the rectangles are between -10 and 10 on the x and y-axis,
-                the method will show the object in a coordinate system scaled between -10 and 10.
+            If True and if the edges of the rectangle are between -10 and 10 on the x and y-axis,
+                the rectangle will be shown in a coordinate system scaled between -10 and 10.
             If False or if the edges of the rectangles are not between -10 and 10 on the x and y-axis, 
-                the method will zoom in on the figure.
+                the plot will zoom in on the rectangle.
+            (default False)
         point : tuple
-            Prints a point (x, y) in the coordinate system (default None).
+            Plots a point (x, y) in the coordinate system (default None).
 
         Returns 
         -------
@@ -140,7 +143,7 @@ class Rectangle(Geometry):
             ax.set(xlim=(lowest_x-self.length/4, highest_x+self.length/4), ylim=(lowest_y-self.width/4, highest_y+self.width/4)) #Sets the limits with some space on the sides of the rectangle.
 
         #Sets the title and labels
-        ax.set(title=(f"Rectangle Plotted in a Coordinate System"), xlabel=("x"), ylabel=("y"))
+        ax.set(title=f"Length: {self.length}, Width: {self.width}, Center: ({self.x_coordinate}, {self.y_coordinate})", xlabel="x", ylabel="y")
         
         plt.show()
 
@@ -237,11 +240,3 @@ class Rectangle(Geometry):
         """
         
         self._width = Geometry.validation_numerical_above_zero(width)
-    
-
-    
-
-    
-
-
-

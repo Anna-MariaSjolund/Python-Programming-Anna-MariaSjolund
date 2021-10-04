@@ -23,6 +23,8 @@ class Circle(Geometry):
         Calculates the circumference of a circle.
     is_inside(x_value : float, y_value : float) -> bool
         Checks if a point (x, y) is inside a circle.
+    plot_figure(fixed_scale10 : bool, point : tuple) -> None
+        Plots a Circle object in a coordinate system.
     __eq__(self, other : Circle) -> bool
         Checks if two circles are congruent.
     __repr__() -> str
@@ -100,8 +102,9 @@ class Circle(Geometry):
                 the circle will be shown in a coordinate system scaled between -10 and 10.
             If False or if the edges of the circle are not located between -10 and 10 on the x and y-axis, 
                 the plot will zoom in on the circle.
+            (default False)
         point : tuple
-            Prints a point (x, y) in the coordinate system (default None).
+            Plots a point (x, y) in the coordinate system (default None).
 
         Returns 
         -------
@@ -134,9 +137,9 @@ class Circle(Geometry):
         ax.set_aspect('equal', adjustable='box') #This will set the axes to the same size, so that the circle will be round when plotted. Reference: https://www.delftstack.com/howto/matplotlib/how-to-make-a-square-plot-with-equal-axes-in-matplotlib/
         
         #Sets the title and labels
-        ax.set(title=(f"Circle (radius={self.radius} LU) with Geometrical Center: ({self.x_coordinate}, {self.y_coordinate})"), xlabel=("x"), ylabel=("y"))
+        ax.set(title=f"Radius: {self.radius}, Center: ({self.x_coordinate}, {self.y_coordinate})", xlabel="x", ylabel="y")
 
-        plt.show()
+        plt.show() 
 
     def __eq__(self, other) -> bool:
         """
