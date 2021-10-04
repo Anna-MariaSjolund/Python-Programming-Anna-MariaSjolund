@@ -1,4 +1,3 @@
-from matplotlib import colors
 from geometry import Geometry
 import matplotlib.pyplot as plt
 from matplotlib.patches import Rectangle as plt_rect
@@ -31,6 +30,7 @@ class Rectangle(Geometry):
     __repr__() -> str
         Returns information about the size and position of a rectangle.
     """
+
     def __init__(self, length:float, width:float, x_coordinate:float=0, y_coordinate:float=0) -> None:
         """
         Parameters
@@ -86,8 +86,8 @@ class Rectangle(Geometry):
             If point is not in the rectangle.
         """
 
-        _ = Geometry.validation_numerical(x_value)
-        _ = Geometry.validation_numerical(y_value)
+        Geometry.validation_numerical(x_value)
+        Geometry.validation_numerical(y_value)
 
         if ((self.x_coordinate-self.length/2) <= x_value <= (self.x_coordinate+self.length/2) 
             and (self.y_coordinate-self.width/2) <= y_value <= (self.y_coordinate+self.width/2)):
@@ -95,7 +95,7 @@ class Rectangle(Geometry):
         else:
             return False
     
-    def plot_figure(self, fixed_scale10:bool = False) -> None: #https://www.geeksforgeeks.org/matplotlib-patches-rectangle-in-python/
+    def plot_figure(self, fixed_scale10:bool=False, point:tuple=None) -> None: #https://www.geeksforgeeks.org/matplotlib-patches-rectangle-in-python/
         """
         Plots a Rectangle object in a coordinate system.
         
@@ -106,35 +106,47 @@ class Rectangle(Geometry):
                 the method will show the object in a coordinate system scaled between -10 and 10.
             If False or if the edges of the rectangles are not between -10 and 10 on the x and y-axis, 
                 the method will zoom in on the figure.
+        point : tuple
+            Prints a point (x, y) in the coordinate system (default None).
 
         Returns 
         -------
         None
         """
 
+        #Sets up the figure and axes
         fig = plt.figure(dpi=100)
         ax = fig.add_subplot()
+        
+        #Plots a point at the specified coordinates
+        if point != None:
+            ax.plot(point[0], point[1], "ko")
 
+        #Creates variables for the edges of the rectangle
         lowest_x = self.x_coordinate-self.length/2
         highest_x = self.x_coordinate+self.length/2 
         lowest_y = self.y_coordinate-self.width/2
         highest_y = self.y_coordinate+self.width/2
 
+        #Creates a rectangle and adds the Patch to the axis
         rectangle_figure = plt_rect((lowest_x, lowest_y), self.length, self.width, facecolor="forestgreen", edgecolor="black")
         ax.add_patch(rectangle_figure)
-        ax.set_aspect("equal", adjustable="box") #https://www.delftstack.com/howto/matplotlib/how-to-make-a-square-plot-with-equal-axes-in-matplotlib/
-
+ 
+        #Sets the scale, depending on the values of the rectangle and if fixed_scale10 is set to True
         if fixed_scale10 == True and lowest_x >= -10 and lowest_y >= -10 and highest_x <= 10 and highest_y <= 10:
             ax.set(xlim=(-10, 10), ylim=(-10, 10), xticks=[-10, -7.5, -5, -2.5, 0, 2.5, 5, 7.5, 10])
+            ax.set_aspect('equal', adjustable='box') #This will set the axes to the same size, so that the rectangle will have the correct dimensions when plotted. Reference: https://www.delftstack.com/howto/matplotlib/how-to-make-a-square-plot-with-equal-axes-in-matplotlib/
         else:
-            ax.set(xlim=(lowest_x-self.length, highest_x+self.length), ylim=(lowest_y-self.width, highest_y+self.width))
+            ax.set(xlim=(lowest_x-self.length/4, highest_x+self.length/4), ylim=(lowest_y-self.width/4, highest_y+self.width/4)) #Sets the limits with some space on the sides of the rectangle.
 
+        #Sets the title and labels
         ax.set(title=(f"Rectangle Plotted in a Coordinate System"), xlabel=("x"), ylabel=("y"))
         
-        
+        plt.show()
+
     def __eq__(self, other):
         """
-        Checks if two objects are congruent.
+        Checks if two rectangles are congruent.
 
         Parameters
         ----------
@@ -146,10 +158,10 @@ class Rectangle(Geometry):
         Returns
         -------
         True
-            If the radius of two Rectangle objects are of the same size.
+            If the length and width of two Rectangle objects are the same size.
         False
             If the other object is not a Rectangle.
-            If the radius of two Rectangle objects are not of the same size.
+            If the length and width of two Rectangle objects are not the same size.
         """
 
         if type(self) != type(other):
@@ -163,19 +175,19 @@ class Rectangle(Geometry):
     def __repr__(self):
         """Returns information about the size and position of a rectangle."""
 
-        return f"The length of the rectangle is {self.length}, and the width is {self.width} length units. The geometric center is: ({self.x_coordinate}, {self.y_coordinate})."
+        return f"The length of the rectangle is {self.length} length units, and the width is {self.width} length units. The geometric center is: ({self.x_coordinate}, {self.y_coordinate})."
     
 
     #GETTERS AND SETTERS
 
     @property
     def length(self) -> float:
-        """A getter method, returning the private length."""
+        """Returns the length, as a private variable."""
         return self._length
     
     @property
     def width(self) -> float:
-        """A getter method, returning the private width."""
+        """Returns the width, as a private variable."""
         return self._width
    
     @length.setter

@@ -50,7 +50,7 @@ class Circle(Geometry):
     def area(self) -> float:
         """Calculates the area of a circle."""
 
-        return (math.pi*(self.radius**2))
+        return math.pi*(self.radius**2)
     
     def circumference(self) -> float:
         """Calculates the circumference of a circle."""
@@ -80,53 +80,67 @@ class Circle(Geometry):
         False
             If point is not in the circle.
         """
-        _ = Geometry.validation_numerical(x_value)
-        _ = Geometry.validation_numerical(y_value)
+
+        Geometry.validation_numerical(x_value)
+        Geometry.validation_numerical(y_value)
         eucl_distance = math.sqrt((self.x_coordinate - x_value)**2 + (self.y_coordinate - y_value)**2)
         if eucl_distance <= self.radius:
             return True
         else: 
             return False
 
-    def plot_figure(self, fixed_scale10:bool = False) -> None: #https://www.geeksforgeeks.org/matplotlib-patches-rectangle-in-python/
+    def plot_figure(self, fixed_scale10:bool=False, point:tuple=None) -> None: #Reference: https://stackoverflow.com/questions/9215658/plot-a-circle-with-pyplot
         """
         Plots a Circle object in a coordinate system.
         
         Arguments
         ---------
         fixed_scale10 : bool
-            If True and if the edges of the rectangles are between -10 and 10 on the x and y-axis,
-                the method will show the object in a coordinate system scaled between -10 and 10.
-            If False or if the edges of the rectangles are not between -10 and 10 on the x and y-axis, 
-                the method will zoom in on the figure.
+            If True and if the edges of the circle are located between -10 and 10 on the x and y-axis,
+                the circle will be shown in a coordinate system scaled between -10 and 10.
+            If False or if the edges of the circle are not located between -10 and 10 on the x and y-axis, 
+                the plot will zoom in on the circle.
+        point : tuple
+            Prints a point (x, y) in the coordinate system (default None).
 
         Returns 
         -------
         None
         """
 
+        #Sets up the figure and axes
         fig = plt.figure(dpi=100)
         ax = fig.add_subplot()
 
+        #Creates a circle and adds the Patch to the axis
+        circle_figure = plt.Circle((self.x_coordinate, self.y_coordinate), self.radius, facecolor="cornflowerblue", edgecolor="black")
+        ax.add_patch(circle_figure)
+
+        #Plots a point at the specified coordinates 
+        if point != None:
+            ax.plot(point[0], point[1], "ko")
+        
+        #Creates variables for the edges of the circle
         lowest_x = self.x_coordinate-self.radius
         highest_x = self.x_coordinate+self.radius
         lowest_y = self.y_coordinate-self.radius
         highest_y = self.y_coordinate+self.radius
 
-        circle_figure = plt.Circle((self.x_coordinate, self.y_coordinate), self.radius, facecolor="cornflowerblue", edgecolor="black")
-        ax.add_patch(circle_figure)
-        ax.set_aspect('equal', adjustable='box') #Reference: https://www.delftstack.com/howto/matplotlib/how-to-make-a-square-plot-with-equal-axes-in-matplotlib/
-
+        #Sets the scale, depending on the values of the circle and if fixed_scale10 is set to True
         if fixed_scale10 == True and lowest_x >= -10 and lowest_y >= -10 and highest_x <= 10 and highest_y <= 10:
             ax.set(xlim=(-10, 10), ylim=(-10, 10), xticks=[-10, -7.5, -5, -2.5, 0, 2.5, 5, 7.5, 10])
         else:
-            ax.set(xlim=(lowest_x-self.radius, highest_x+self.radius), ylim=(lowest_y-self.radius, highest_y+self.radius))
+            ax.set(xlim=(lowest_x-self.radius/2, highest_x+self.radius/2), ylim=(lowest_y-self.radius/2, highest_y+self.radius/2)) #Sets the limits with some space on the sides of the circle.
+        ax.set_aspect('equal', adjustable='box') #This will set the axes to the same size, so that the circle will be round when plotted. Reference: https://www.delftstack.com/howto/matplotlib/how-to-make-a-square-plot-with-equal-axes-in-matplotlib/
+        
+        #Sets the title and labels
+        ax.set(title=(f"Circle (radius={self.radius} LU) with Geometrical Center: ({self.x_coordinate}, {self.y_coordinate})"), xlabel=("x"), ylabel=("y"))
 
-        ax.set(title=(f"Circle Plotted in a Coordinate System"), xlabel=("x"), ylabel=("y"))
+        plt.show()
 
     def __eq__(self, other) -> bool:
         """
-        Checks if two objects are congruent.
+        Checks if two circles are congruent.
 
         Parameters
         ----------
@@ -143,6 +157,7 @@ class Circle(Geometry):
             If the other object is not a Circle.
             If the radius of two Circle objects are not of the same size.
         """
+
         if type(self) != type(other):
             return False
 
@@ -161,7 +176,7 @@ class Circle(Geometry):
     
     @property
     def radius(self) -> float:
-        """A getter method, returning the private radius."""
+        """Returns the radius, as a private variable."""
         return self._radius
    
     @radius.setter
