@@ -13,7 +13,7 @@ class Geometry(ABC):
     
     Instance Methods
     ----------------
-    translate(x_new_value:float, y_new_value:float) -> None
+    translate(x_new_value : float, y_new_value : float) -> None
         Sets the x-coordinate and the y-coordinate to new values.
     
     Abstract Methods
@@ -33,9 +33,9 @@ class Geometry(ABC):
     
     Static Methods
     --------------
-    validation_numerical(value:float) -> float
+    validation_numerical(value : float) -> float
         Validates that a value is numerical.
-    validation_numerical_above_zero(value:float) -> float
+    validation_numerical_above_zero(value : float) -> float
         Validates that a value is numerical and above zero.
     """
 
@@ -181,13 +181,13 @@ class Geometry(ABC):
 
     @property
     def x_coordinate(self) -> float:
-        """A getter method, returning the private x-coordinate."""
+        """Returns the private x-coordinate."""
 
         return self._x_coordinate
 
     @property
     def y_coordinate(self) -> float:
-        """A getter method, returning the private y-coordinate."""
+        """Returns the private y-coordinate."""
 
         return self._y_coordinate
     
