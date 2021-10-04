@@ -64,7 +64,6 @@ class TestCircle(unittest.TestCase):
         circ = Circle(2)
         self.assertEqual((circ.radius, circ.x_coordinate, circ.y_coordinate), (2, 0, 0))
 
-
     def test_invalid_string_in_parameter(self):
         """Tests if a TypeError is raised when entering a str in the parameters."""
 
@@ -252,7 +251,7 @@ class TestRectangle(unittest.TestCase):
     def test_equality_true(self):
         """Tests the overloaded equality operator, using two Rectangles with same length and width."""
 
-        rect1 = Rectangle(4, 3, 2, 1)
+        rect1 = Rectangle(4, 3, 1, 1)
         rect2 = Rectangle(4, 3, 2, 1)
         self.assertEqual(rect1 == rect2, True)
 
@@ -353,6 +352,12 @@ class TestSphere(unittest.TestCase):
         sph = self.create_sphere_object()
         self.assertAlmostEqual(sph.circumference(), 18.850, places=3)
     
+    def test_volume(self):
+        """Tests that the volume is correctly calculated."""
+
+        sph = self.create_sphere_object()
+        self.assertAlmostEqual(sph.volume(), 113.097, places=3)
+    
     def test_is_inside_true(self):
         """Tests if points that should be inside/on the boarder of the sphere are correctly classified."""
 
@@ -417,7 +422,7 @@ class TestCube(unittest.TestCase):
         return Cube(self.side, self.x_coordinate, self.y_coordinate, self.z_coordinate)
 
     
-    #TESTS CREATION OF SPHERE OBJECT
+    #TESTS CREATION OF CUBE OBJECT
 
     def test_create_cube_object(self):
         """Tests if a Cube object has been set up with the correct values."""
@@ -449,7 +454,7 @@ class TestCube(unittest.TestCase):
         with self.assertRaises(ValueError):
             Cube(-1, 2, 3, 4)
 
-    #TEST CUBE METHODS
+    #TESTS CUBE METHODS
 
     def test_translate(self):
         """Tests if the x, y and z-coordinates are changed correctly."""
@@ -481,6 +486,12 @@ class TestCube(unittest.TestCase):
         cub = self.create_cube_object()
         self.assertEqual(cub.circumference(), 12)
     
+    def test_volume(self):
+        """Tests that the volume is correctly calculated."""
+
+        cub = self.create_cube_object()
+        self.assertEqual(cub.volume(), 27)
+    
     def test_is_inside_true(self):
         """Tests if points that should be inside/on the boarder of the cube are correctly classified."""
 
@@ -489,7 +500,7 @@ class TestCube(unittest.TestCase):
         self.assertEqual(cub.is_inside(4.5, -4.5, 4.5), True)
     
     def test_is_inside_false(self):
-        """Tests if points that should not be inside/on the boarder of the sphere are correctly classified."""
+        """Tests if points that should not be inside/on the boarder of the cube are correctly classified."""
 
         cub = self.create_cube_object()
         self.assertEqual(cub.is_inside(4.6, -4.5, 4.5), False)
