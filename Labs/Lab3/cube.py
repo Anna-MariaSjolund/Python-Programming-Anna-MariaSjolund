@@ -55,7 +55,7 @@ class Cube(Rectangle):
 
     #METHODS
 
-    def translate(self, x_new_value:float, y_new_value:float, z_new_value:float) -> float:
+    def translate(self, x_new_value:float, y_new_value:float, z_new_value:float) -> None:
         """
         Sets the x, y and z-coordinates to new values.
 
@@ -182,7 +182,7 @@ class Cube(Rectangle):
 
         plt.show()
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         """Returns information about the size and position of a cube."""
 
         return f"The cube has a side of {self.side} length units. The geometric center is: ({self.x_coordinate}, {self.y_coordinate}, {self.z_coordinate})."
@@ -203,7 +203,7 @@ class Cube(Rectangle):
         return self._z_coordinate
     
     @side.setter
-    def side(self, side) -> None:
+    def side(self, side:float) -> None:
         """
         Validates that the side is numerical and above zero, and assigns it to a private variable.
         
