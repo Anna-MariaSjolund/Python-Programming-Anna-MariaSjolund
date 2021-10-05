@@ -22,11 +22,11 @@ class Geometry(ABC):
         Calculates the area of a geometrical figure.
     circumference() -> float
         Calculates the circumference of a geometrical figure.
-    is_inside() -> bool
+    is_inside(x_value : float, y_value : float) -> bool
         Checks if a point (x, y) is inside a geometrical figure.
-    plot_figure()
-        Plots a geometrical figure in a coordinate system. 
-    __eq__() -> bool
+    plot_figure(fixed_scale10 : bool = False, point : tuple = None) -> None
+        Plots a geometrical figure (and a point) in a coordinate system. 
+    __eq__(self, other) -> bool
         Checks if two geometrical figures are congruent.
     __repr__() -> str
         Returns information about the size and position of a geometrical figure.
@@ -95,18 +95,19 @@ class Geometry(ABC):
         pass
 
     @abstractmethod
-    def is_inside(self) -> bool:
-        """Checks if a point (x, y) is inside a geometrical figure."""
-
-        pass
-
-    def plot_figure(self):
-        "Plots a geometrical figure in a coordinate system."
+    def is_inside(self, x_value:float, y_value:float) -> bool:
+        """Checks if a point is inside a geometrical figure."""
 
         pass
 
     @abstractmethod
-    def __eq__(self) -> bool:
+    def plot_figure(self, fixed_scale10:bool=False, point:tuple=None) -> None:
+        "Plots a geometrical figure (and a point) in a coordinate system."
+
+        pass
+
+    @abstractmethod
+    def __eq__(self, other) -> bool:
         """Checks if two geometrical figures are congruent."""
 
         pass
@@ -147,7 +148,7 @@ class Geometry(ABC):
             return value
     
     @staticmethod
-    def validation_numerical_above_zero(value) -> float:
+    def validation_numerical_above_zero(value:float) -> float:
         """
         Validates that a value is numerical and above 0.
         
@@ -215,7 +216,8 @@ class Geometry(ABC):
     
     @y_coordinate.setter
     def y_coordinate(self, y_coordinate:float) -> None:
-        """Validates that the y-coordinate is numerical, and assigns it to a private variable.
+        """
+        Validates that the y-coordinate is numerical, and assigns it to a private variable.
         
         Parameters
         ----------
