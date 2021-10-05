@@ -169,7 +169,7 @@ class Circle(Geometry):
         else:
             return False
     
-    def __repr__(self):
+    def __repr__(self) -> str:
         """Returns information about the size and position of a circle."""
 
         return f"The radius of the circle is: {self.radius} length units. The geometric center is: ({self.x_coordinate}, {self.y_coordinate})."
