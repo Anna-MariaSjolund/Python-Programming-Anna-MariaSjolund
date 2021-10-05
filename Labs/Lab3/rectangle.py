@@ -54,17 +54,17 @@ class Rectangle(Geometry):
 
     #METHODS
 
-    def area(self):
+    def area(self) -> float:
         """Calculates the area of a rectangle."""
 
         return self.length*self.width
     
-    def circumference(self):
+    def circumference(self) -> float:
         """Calculates the circumference of a rectangle."""
 
         return ((self.length*2)+(self.width*2)) 
 
-    def is_inside(self, x_value:float, y_value:float):
+    def is_inside(self, x_value:float, y_value:float) -> bool:
         """
         Checks if a point (x, y) is inside a rectangle.
 
@@ -147,7 +147,7 @@ class Rectangle(Geometry):
         
         plt.show()
 
-    def __eq__(self, other):
+    def __eq__(self, other) -> bool:
         """
         Checks if two rectangles are congruent.
 
@@ -175,7 +175,7 @@ class Rectangle(Geometry):
         else:
             return False
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         """Returns information about the size and position of a rectangle."""
 
         return f"The length of the rectangle is {self.length} length units, and the width is {self.width} length units. The geometric center is: ({self.x_coordinate}, {self.y_coordinate})."
