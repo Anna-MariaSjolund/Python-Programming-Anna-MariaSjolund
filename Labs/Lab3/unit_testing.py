@@ -6,7 +6,7 @@ from cube import Cube
 import unittest
 
 
-#TEST ABSTRACT BASE CLASS GEOMETRY
+#TESTS ABSTRACT BASE CLASS GEOMETRY
 
 class TestGeometry(unittest.TestCase):
     """Tests the static methods in the Geometry class."""
@@ -32,7 +32,7 @@ class TestGeometry(unittest.TestCase):
             Geometry.validation_numerical_above_zero(-3)
 
 
-#TEST CIRCLE SUBCLASS (AND TRANSLATE METHOD INHERITED FROM THE GEOMETRY CLASS)
+#TESTS CIRCLE SUBCLASS (AND TRANSLATE METHOD INHERITED FROM THE GEOMETRY CLASS)
 
 class TestCircle(unittest.TestCase):
     """Tests the Circle class."""
@@ -157,7 +157,7 @@ class TestCircle(unittest.TestCase):
         self.assertEqual(circ == rectang, False)
 
 
-#TEST RECTANGLE SUBCLASS
+#TESTS RECTANGLE SUBCLASS
 
 class TestRectangle(unittest.TestCase):
     """Tests the Rectangle class."""
@@ -183,7 +183,7 @@ class TestRectangle(unittest.TestCase):
         self.assertEqual((rect.length, rect.width, rect.x_coordinate, rect.y_coordinate), (self.length, self.width, self.x_coordinate, self.y_coordinate))
 
     def test_create_rectangle_object_without_x_y(self):
-        """Tests if a Circle object has been set up correctly, when not entering the x and y-coordinates."""
+        """Tests if a Rectangle object has been set up correctly, when not entering the x and y-coordinates."""
 
         rect = Rectangle(2, 3)
         self.assertEqual((rect.length, rect.width, rect.x_coordinate, rect.y_coordinate), (2, 3, 0, 0))
@@ -256,9 +256,9 @@ class TestRectangle(unittest.TestCase):
         self.assertEqual(rect1 == rect2, True)
 
     def test_equality_false(self):
-        """Tests the overloaded equality operator, using two Rectangle with same length and width."""  
+        """Tests the overloaded equality operator, using two Rectangle with different length and width."""  
 
-        rect1 = Rectangle(5, 3, 2, 1)
+        rect1 = Rectangle(5, 4, 2, 1)
         rect2 = Rectangle(4, 3, 2, 1)
         self.assertEqual(rect1 == rect2, False)
 
@@ -270,7 +270,7 @@ class TestRectangle(unittest.TestCase):
         self.assertEqual(rect == circ, False)
 
 
-#TEST SPHERE SUBCLASS
+#TESTS SPHERE SUBCLASS
 
 class TestSphere(unittest.TestCase):
     """Tests the Sphere class."""
@@ -320,7 +320,7 @@ class TestSphere(unittest.TestCase):
         with self.assertRaises(ValueError):
             Sphere(-1, 2, 3, 4)
 
-    #TEST SPHERE METHODS
+    #TESTS SPHERE METHODS
 
     def test_translate(self):
         """Tests if the x, y and z-coordinates are changed correctly."""
@@ -404,7 +404,7 @@ class TestSphere(unittest.TestCase):
         self.assertEqual(sph == circ, False)
 
 
-#TEST CUBE SUBCLASS
+#TESTS CUBE SUBCLASS
 
 class TestCube(unittest.TestCase):
     """Tests the Cube class."""

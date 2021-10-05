@@ -25,7 +25,7 @@ class Circle(Geometry):
         Checks if a point (x, y) is inside a circle.
     plot_figure(fixed_scale10 : bool = False, point : tuple = None) -> None
         Plots a Circle object (and a point) in a coordinate system.
-    __eq__(self, other : Circle) -> bool
+    __eq__(self, other) -> bool
         Checks if two circles are congruent.
     __repr__() -> str
         Returns information about the size and position of a circle.

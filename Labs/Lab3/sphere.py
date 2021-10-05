@@ -28,8 +28,8 @@ class Sphere(Circle):
         Calculates the volume of a sphere.
     is_inside(x_value : float, y_value : float, z_value : float) -> bool
         Checks if a point (x, y, z) is inside a sphere.
-    plot_figure(fixed_scale10 : bool, point : tuple) -> None
-        Creates a Sphere object in 3D, in a coordinate system.
+    plot_figure(fixed_scale10 : bool = False, point : tuple = None) -> None
+        Creates a Sphere object (and plots a point) in 3D, in a coordinate system.
     __repr__() -> str
         Returns information about the size and position of a sphere.
     """
@@ -111,7 +111,7 @@ class Sphere(Circle):
         Returns
         -------
         True
-            If point is in the sphere.
+            If point is in the sphere (including the edges of the sphere).
         False
             If point is not in the sphere.
         """      
@@ -127,7 +127,7 @@ class Sphere(Circle):
 
     def plot_figure(self, fixed_scale10:bool=False, point:tuple=None) -> None: #Reference: https://stackoverflow.com/questions/40460960/how-to-plot-a-sphere-when-we-are-given-a-central-point-and-a-radius-size
         """
-        Creates a Sphere object in 3D, in a coordinate system.
+        Creates a Sphere object in 3D (and plots a point), in a coordinate system.
         
         Arguments
         ---------
@@ -176,6 +176,7 @@ class Sphere(Circle):
         
         #Sets the title and labels
         ax.set(title=f"Radius: {self.radius}, Center: ({self.x_coordinate}, {self.y_coordinate}, {self.z_coordinate})", xlabel='x', ylabel='y', zlabel='z')
+        
         plt.show()
 
     def __repr__(self) -> str:

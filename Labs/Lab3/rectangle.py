@@ -23,11 +23,11 @@ class Rectangle(Geometry):
         Calculates the area of a rectangle.
     circumference() -> float
         Calculates the circumference of a rectangle.
-    is_inside() -> bool
+    is_inside(x_value : float, y_value : float) -> bool
         Checks if a point (x, y) is inside a rectangle.
-    plot_figure(fixed_scale10 : bool, point : tuple) -> None
-        Plots a Rectangle object in a coordinate system.
-    __eq__() -> bool
+    plot_figure(fixed_scale10 : bool = False, point : tuple = None) -> None
+        Plots a Rectangle object (and a point) in a coordinate system.
+    __eq__(self, other) -> bool
         Checks if two rectangles are congruent.
     __repr__() -> str
         Returns information about the size and position of a rectangle.
@@ -64,7 +64,7 @@ class Rectangle(Geometry):
 
         return ((self.length*2)+(self.width*2)) 
 
-    def is_inside(self, x_value, y_value):
+    def is_inside(self, x_value:float, y_value:float):
         """
         Checks if a point (x, y) is inside a rectangle.
 
@@ -83,7 +83,7 @@ class Rectangle(Geometry):
         Returns
         -------
         True
-            If point is in the rectangle.
+            If point is in the rectangle (including the edges of the rectangle).
         False
             If point is not in the rectangle.
         """

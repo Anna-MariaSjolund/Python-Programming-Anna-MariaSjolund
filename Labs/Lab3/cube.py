@@ -20,15 +20,16 @@ class Cube(Rectangle):
     
     Methods
     -------
+    translate(x_new_value : float, y_new_value : float, z_new_value : float) -> None:
+        Sets the x, y and z-coordinates to new values.
     area() -> float
         Calculates the surface area of a cube.
     volume() -> float:
         Calculates the volume of a cube.
     is_inside(x_value : float, y_value : float, z_value : float) -> bool
         Checks if a point (x, y, z) is inside a cube.
-    plot_figure(fixed_scale10 : bool, point : tuple) -> None
-        Creates a Cube object in 3D, in a coordinate system.
-    Creates a Sphere object in 3D, in a coordinate system.
+    plot_figure(fixed_scale10 : bool = False, point : tuple = None) -> None
+        Creates a Cube object (and plots a point) in 3D, in a coordinate system.
     __repr__() -> str
         Returns information about the size and position of a cube.
     """
@@ -47,7 +48,7 @@ class Cube(Rectangle):
             The z-coordinate at the centre of a cube (default 0).
         """
 
-        super().__init__(side, side, x_coordinate, y_coordinate) #The side (length) will be passed in as both width and height - inherited from the Rectangle class. Reference: https://www.pythonlikeyoumeanit.com/Module4_OOP/Inheritance.html
+        super().__init__(side, side, x_coordinate, y_coordinate) #The size of the side will be passed in as both length and width - inherited from the Rectangle class. Reference: https://www.pythonlikeyoumeanit.com/Module4_OOP/Inheritance.html
         self.side = side
         self.z_coordinate = z_coordinate
 
@@ -111,7 +112,7 @@ class Cube(Rectangle):
         Returns
         -------
         True
-            If point is in the cube.
+            If point is in the cube (including the edges of the cube).
         False
             If point is not in the cube.
         """
@@ -128,7 +129,7 @@ class Cube(Rectangle):
 
     def plot_figure(self, fixed_scale10:bool=False, point:tuple=None) -> None: #Reference: https://stackoverflow.com/questions/33540109/plot-surfaces-on-a-cube/33542678
         """
-        Creates a Cube object in 3D, in a coordinate system. 
+        Creates a Cube object (and plots a point) in 3D, in a coordinate system. 
         
         Arguments
         ---------
