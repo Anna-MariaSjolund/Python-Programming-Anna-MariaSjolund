@@ -23,8 +23,8 @@ class Circle(Geometry):
         Calculates the circumference of a circle.
     is_inside(x_value : float, y_value : float) -> bool
         Checks if a point (x, y) is inside a circle.
-    plot_figure(fixed_scale10 : bool, point : tuple) -> None
-        Plots a Circle object in a coordinate system.
+    plot_figure(fixed_scale10 : bool = False, point : tuple = None) -> None
+        Plots a Circle object (and a point) in a coordinate system.
     __eq__(self, other : Circle) -> bool
         Checks if two circles are congruent.
     __repr__() -> str
@@ -78,7 +78,7 @@ class Circle(Geometry):
         Returns
         -------
         True
-            If point is in the circle.
+            If point is in the circle (including the edges of the circle).
         False
             If point is not in the circle.
         """
@@ -93,7 +93,7 @@ class Circle(Geometry):
 
     def plot_figure(self, fixed_scale10:bool=False, point:tuple=None) -> None: #Reference: https://stackoverflow.com/questions/9215658/plot-a-circle-with-pyplot
         """
-        Plots a Circle object in a coordinate system.
+        Plots a Circle object (and a point) in a coordinate system.
         
         Arguments
         ---------
