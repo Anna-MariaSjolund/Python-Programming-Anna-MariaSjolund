@@ -54,7 +54,7 @@ class Sphere(Circle):
 
     #METHODS
 
-    def translate(self, x_new_value, y_new_value, z_new_value) -> None:
+    def translate(self, x_new_value:float, y_new_value:float, z_new_value:float) -> None:
         """
         Sets the x, y and z-coordinates to new values.
 
@@ -188,7 +188,7 @@ class Sphere(Circle):
     #GETTERS AND SETTERS 
 
     @property
-    def z_coordinate(self):
+    def z_coordinate(self) -> float:
         """Returns the private z-coordinate, as a private variable."""
 
         return self._z_coordinate
